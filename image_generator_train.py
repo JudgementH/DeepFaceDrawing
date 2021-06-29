@@ -44,6 +44,8 @@ if __name__ == '__main__':
                                dim=0)
                 vutils.save_image(si, 'datasets/image_generator/epoch_%d_i_%d.jpg' % (epoch, i), range=(-1, 1),
                                   normalize=True)
+                if i > 0:
+                    break
 
         # test_loss = 0
         test_dataloader = tqdm(test_dataloader)

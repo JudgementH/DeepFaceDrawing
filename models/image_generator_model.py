@@ -30,8 +30,9 @@ class ImageGeneratorModel(BaseModel):
         self.autoencoder_weight_path = opt.autoencoder_weight_path
         self.__set_autoencoder()
         # 设置VGG
-        self.vgg_weight_path = opt.vgg_weight_path
-        self.__set_vgg()
+        if self.isTrain:
+            self.vgg_weight_path = opt.vgg_weight_path
+            self.__set_vgg()
         # feature list
         # self.bg_feature_list = None
         # self.left_eye_feature_list = None
@@ -114,11 +115,14 @@ class ImageGeneratorModel(BaseModel):
         with torch.no_grad():
             self.feature_map = self.net_feature_decoder_bg(latent_vector_dict['bg_latent'])
             for key in latent_vector_dict:
-                net = getattr(self, f'net_feature_decoder_{key.split("_")[0]}')
+                name = key.split("_latent")[0]
+                net = getattr(self, f'net_feature_decoder_{name}')
                 self.feature_map[:, :,
-                latent_vector_dict[key][0]:latent_vector_dict[key][0] + latent_vector_dict[key][2],
-                latent_vector_dict[key][1]:latent_vector_dict[key][1] + latent_vector_dict[key][
+                self.face_part[name][0]:self.face_part[name][0] + self.face_part[name][2],
+                self.face_part[name][1]:self.face_part[name][1] + self.face_part[name][
                     2]] = self.fake_image = net(latent_vector_dict[key])
+
+            self.fake_image = self.net_generator(self.feature_map)
 
     def get_latent(self, edge: torch.Tensor):
         edge = edge.to(self.device)
@@ -199,7 +203,7 @@ class ImageGeneratorModel(BaseModel):
             p.requires_grad = False
         for p in self.autoencoder.net_encoder_nose.parameters():
             p.requires_grad = False
-        for p in self.autoencoder.net_decoder_mouth.parameters():
+        for p in self.autoencoder.net_encoder_mouth.parameters():
             p.requires_grad = False
         if self.isTrain:
             for p in self.autoencoder.net_decoder_bg.parameters():
@@ -235,7 +239,7 @@ class ImageGeneratorModel(BaseModel):
         # 把edge提取出latent，并加入feature list:numpy
         edge = edge.to(self.device)
         feature_list_dict = self.autoencoder.get_latent(edge)  # Bx512
-        if self.feature_dict_list:
+        if not self.feature_dict_list:
             self.feature_dict_list = feature_list_dict
         else:
             # self.feature_dict_list = torch.cat((self.feature_list, feature_list), dim=0)

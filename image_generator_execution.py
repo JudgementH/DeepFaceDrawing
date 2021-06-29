@@ -38,7 +38,7 @@ def get_transform(grayscale=True, convert=True):
 def process_edge(edge_src):
     transform = get_transform()
 
-    images = make_dataset(src)
+    images = make_dataset(edge_src)
     length = len(images)
     for i, filenmae in enumerate(images):
         print("processing image %d/%d" % ((i + 1), length), end='\t')
@@ -62,19 +62,21 @@ def execute_model(image_path: str, save_name, nearN=2):
     model.generator_fake(similar_latent)
     # model.set_edge(edge_tensor)
     # model.test()
-    vutils.save_image(model.fake_image, '%s' % (save_name), value_range=(-1, 1), normalize=True)
+    vutils.save_image(model.fake_image, '%s' % (save_name), range=(-1, 1), normalize=True)
 
 
 if __name__ == '__main__':
-    src = r"../datasets/test/Edge"
-    sketch_src = r"../datasets/test/Edge/13442.jpg"
-    i = "1"
-    # execute_model(sketch_src, i)
+    src = r"./datasets/test/Edge"
+    # process_edge(src)
+
+    sketch_src = r"./datasets/test/Edge/13442.jpg"
+    i = "1.jpg``````````````````````````````````````"
+    execute_model(sketch_src, i)
 
     # test dataset
-    images = make_dataset(r"E:\a")
-
-    for i, image in enumerate(images):
-        print(i)
-        name = os.path.basename(image).split('.')[0]
-        execute_model(image, f'E:/a/a_{name}.jpg', nearN=10)
+    # images = make_dataset(r"E:\a")
+    #
+    # for i, image in enumerate(images):
+    #     print(i)
+    #     name = os.path.basename(image).split('.')[0]
+    #     execute_model(image, f'E:/a/a_{name}.jpg', nearN=10)
