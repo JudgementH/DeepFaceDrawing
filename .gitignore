@@ -132,5 +132,12 @@ dmypy.json
 .idea/
 
 /datasets/train
+/datasets/test
+/datasets/autoencoder
+/datasets/autoencoder_test
+/datasets/imagegenerator
+/datasets/image_generator
 
 /checkpoints/auto_encoder
+/checkpoints/VGG
+/checkpoints/image_generator

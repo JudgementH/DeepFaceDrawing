@@ -88,7 +88,7 @@ class BaseModel(ABC):
                     net.cuda(self.gpu_ids[0])
         save_filename = '%s_%s.pth' % (self.name(), epoch)
         save_path = os.path.join(self.save_dir, save_filename)
-        torch.save(model_dict, save_path)
+        torch.save(model_dict, save_path, _use_new_zipfile_serialization=True)
 
     def load_networks(self, epoch):
         """加载模型

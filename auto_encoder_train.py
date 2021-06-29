@@ -42,6 +42,8 @@ if __name__ == '__main__':
                 si = torch.cat([model.image, model.bg_fake], dim=0)
                 vutils.save_image(si, 'datasets/autoencoder/epoch_%d_i_%d.jpg' % (epoch, i), range=(-1, 1),
                                   normalize=True)
+                if i > 0:
+                    break
 
 
         test_loss = 0

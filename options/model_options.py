@@ -35,7 +35,7 @@ class AutoEncoderOption(BaseOption):
                                  help='learning rate, default is 2e-4, usually dont need to change it, you can try make it smaller, such as 1e-4')
 
         # 数据集参数
-        self.parser.add_argument('--batch_size', type=int, default=4,
+        self.parser.add_argument('--batch_size', type=int, default=1,
                                  help='how many images to train together at one iteration')
         self.parser.add_argument('--shuffle', type=bool, default=True, help='数据集是否打乱')
 
@@ -65,7 +65,7 @@ class ImageGeneratorOption(BaseOption):
         # TODO autoencoder path
         self.parser.add_argument('--autoencoder_weight_path', type=str,
                                  default='./checkpoints/auto_encoder/AutoEncoder0.pth',
-                                 help='VGG网络权值地址')
+                                 help='autoencoder网络权值地址')
 
         # 模型参数
         self.parser.add_argument('--im_size', type=int, default=256, help='resolution of the generated images')
@@ -90,8 +90,8 @@ class ImageGeneratorOption(BaseOption):
         # 文件地址
         self.parser.add_argument('--vgg_weight_path', type=str, default='./checkpoints/VGG/vgg-feature-weights.pth',
                                  help='VGG网络权值地址')
-        self.parser.add_argument('--path_image', type=str, default='train/image/giraffe', help='彩色图片文件夹地址，内部应该有很多图片')
-        self.parser.add_argument('--path_edge', type=str, default='train/edge/giraffe', help='边缘图片文件夹地址，内部应该有很多图片')
+        self.parser.add_argument('--path_image', type=str, default='train/Image', help='彩色图片文件夹地址，内部应该有很多图片')
+        self.parser.add_argument('--path_edge', type=str, default='train/Edge', help='边缘图片文件夹地址，内部应该有很多图片')
 
         # 训练参数
         self.parser.add_argument('--epoch', type=int, default=200, help='训练的epoch数目')
@@ -101,7 +101,7 @@ class ImageGeneratorOption(BaseOption):
         self.parser.add_argument('--perceptual_weight', type=float, default=1, help='perceptual loss weight')
 
         # 数据集参数
-        self.parser.add_argument('--batch_size', type=int, default=8,
+        self.parser.add_argument('--batch_size', type=int, default=1,
                                  help='how many images to train together at one iteration')
         self.parser.add_argument('--shuffle', type=bool, default=True, help='数据集是否打乱')
 
@@ -110,11 +110,11 @@ class ImageGeneratorOption(BaseOption):
         self.parser.add_argument('--isTrain', type=bool, default=False)
 
         # 文件地址
-        self.parser.add_argument('--path_image', type=str, default='test/image/giraffe', help='彩色图片文件夹地址，内部应该有很多图片')
-        self.parser.add_argument('--path_edge', type=str, default='test/edge/giraffe', help='edge图片文件夹地址，内部应该有很多图片')
+        self.parser.add_argument('--path_image', type=str, default='test/Image', help='彩色图片文件夹地址，内部应该有很多图片')
+        self.parser.add_argument('--path_edge', type=str, default='test/Edge', help='edge图片文件夹地址，内部应该有很多图片')
 
         # 数据集参数
-        self.parser.add_argument('--batch_size', type=int, default=8,
+        self.parser.add_argument('--batch_size', type=int, default=1,
                                  help='how many images to train together at one iteration')
         self.parser.add_argument('--shuffle', type=bool, default=False, help='数据集是否打乱')
 

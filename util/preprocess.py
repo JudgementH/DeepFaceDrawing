@@ -3,7 +3,6 @@ import os
 from PIL import Image
 import numpy as np
 
-
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
     '.png', '.PNG', '.ppm', '.PPM', '.bmp', '.BMP',
@@ -52,12 +51,24 @@ def resize_and_save(image_dir, output_dir, target_size=256):
         image.save(os.path.join(output_dir, os.path.basename(images_path[i])))
         print('%d/%d finished!' % (i, len(images_path)))
 
+
 def main():
     path = './mydataset/train/artist/car/00004.png'
     image = Image.open(path)
     print(len(image.split()))
 
+
 if __name__ == '__main__':
     DIR = r'F:\DD\datasets\Face\face'
     OUT = r'F:\DD\datasets\Face\face512'
-    resize_and_save(DIR, OUT,target_size=512)
+    # resize_and_save(DIR, OUT, target_size=512)
+
+    # a_np = np.array([1, 2, 3])
+    # b_np = np.array([4, 5, 6])
+    # dict_ = {'a': a_np, 'b': b_np}
+    # np.save('data.npy',dict_)
+    # dict_ = np.load('data.npy',allow_pickle=True).item()
+    # print(type(dict_))
+    # for key in dict_:
+    #     print(key)
+
